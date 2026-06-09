@@ -1,0 +1,6 @@
+model,macro_f1_mean,macro_f1_std
+CatBoost,0.9733,0.0031
+LightGBM,0.9703,0.0032
+XGBoost,0.9693,0.0038
+RandomForest,0.969,0.0031
+LogReg,0.6865,0.0072

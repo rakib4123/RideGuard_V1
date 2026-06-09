@@ -1,0 +1,88 @@
+# RideGuard pre-crash feature governance (versioned).
+# Every exclusion below is justified by an empirical leakage audit, not by intuition.
+version: "2.0.0"
+
+tier1_behavioral:           # bike dataset (has a genuine "No Accident" control class)
+  target: Accident_Severity
+  # severity-as-ordinal-risk: No Accident < Moderate < Severe
+  target_order: ["No Accident", "Moderate Accident", "Severe Accident"]
+  allowed:
+    - Biker_Age
+    - Biker_Occupation
+    - Biker_Education_Level
+    - Riding_Experience
+    - Daily_Travel_Distance
+    - Talk_While_Riding
+    - Smoke_While_Riding
+    - Wearing_Helmet
+    - Motorcycle_Ownership
+    - Valid_Driving_License
+    - Bike_Condition
+    - Road_Type
+    - Road_condition
+    - Weather
+    - Time_of_Day
+    - Traffic_Density
+    - Speed_Limit
+    - Bike_Speed
+    - Biker_Alcohol
+  forbidden:
+    # LEAKAGE: this column is defined differently for crash vs non-crash rows
+    # (crash = vehicles *involved* 1-3; no-crash = vehicles *around* 1-8).
+    # A model trivially learns ">3 vehicles => No Accident". Excluded.
+    - Number_of_Vehicles
+    # redundant pre-computed copies; we re-encode ourselves for reproducibility
+    - Biker_Occupation_Encoded
+    - Biker_Education_Level_Encoded
+    - Talk_While_Riding_Encoded
+    - Smoke_While_Riding_Encoded
+    - Wearing_Helmet_Encoded
+    - Motorcycle_Ownership_Encoded
+    - Valid_Driving_License_Encoded
+    - Bike_Condition_Encoded
+    - Road_Type_Encoded
+    - Road_condition_Encoded
+    - Weather_Encoded
+    - Time_of_Day_Encoded
+    - Accident_Severity_Encoded
+    - Biker_Age_Scaled
+    - Riding_Experience_Scaled
+    - Daily_Travel_Distance_Scaled
+    - Traffic_Density_Scaled
+    - Speed_Limit_Scaled
+    - Bike_Speed_Scaled
+    - Number_of_Vehicles_Scaled
+
+tier2_spatial:              # Dhaka dataset (crash-only; used for the SPATIAL PRIOR)
+  intensity: Accident_Intensity
+  lat: Latitude
+  lon: Longitude
+  # severity weights for hotspot density (ordinal harm)
+  intensity_weights:
+    Death: 3.0
+    Extensive Injury: 2.0
+    Minor Injury: 1.0
+    Vehicle Collision: 0.5
+  allowed:                  # deployable context if a tier-2 classifier is attempted
+    - Road Surface Type
+    - Road nature
+    - Road classification
+    - Place characteristic
+    - Type of Road connection point
+    - Road Surface Condition
+    - Trafic Condition
+    - Junction
+    - Traffic_Control
+    - Weather
+    - Lighting
+    - Month_Num
+    - Latitude
+    - Longitude
+  forbidden:                # post-crash outcomes -> the classic leakage traps
+    - Death Count
+    - Injury Count
+    - Severity_Score
+    - Severity_Category
+    - Vehicle Count
+    - Vehicle Info          # the collision description is known only after the crash
+    - Victim Category

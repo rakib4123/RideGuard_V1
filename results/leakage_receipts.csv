@@ -1,0 +1,3 @@
+target,leak_cols,macroF1_precrash_only,macroF1_with_outcome_cols,inflation
+Accident_Severity,Number_of_Vehicles,0.967,0.973,0.006
+Severity_Category,"Death Count, Injury Count",0.228,1.0,0.772

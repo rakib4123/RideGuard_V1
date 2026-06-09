@@ -1,0 +1,10 @@
+scenario,factor,mean_risk_delta,monotonicity_violation_rate
+remove_helmet,Wearing_Helmet,0.0107,0.044
+add_alcohol,Biker_Alcohol,0.0539,0.033
+talk_while_riding,Talk_While_Riding,0.1613,0.0925
+smoke_while_riding,Smoke_While_Riding,0.1277,0.043
+no_license,Valid_Driving_License,0.0548,0.0315
+old_bike,Bike_Condition,0.0097,0.047
+make_rainy,Weather,-0.0004,0.1035
+make_foggy,Weather,-0.0002,0.0675
+speed +20 km/h,,0.0,0.0815

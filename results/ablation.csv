@@ -1,0 +1,7 @@
+removed_group,features_dropped,macro_f1,drop_vs_full
+risk_behaviors,3,0.9268,0.0428
+rider_profile,6,0.9306,0.039
+speed,2,0.9383,0.0314
+environment,5,0.9419,0.0278
+protective,3,0.9518,0.0178
+(none) full model,0,0.9696,0.0

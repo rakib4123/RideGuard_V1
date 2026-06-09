@@ -1,0 +1,272 @@
+{
+  "gate_version": "2.0.0",
+  "data_realism_bike": {
+    "n_rows": 15100,
+    "n_unique_combos": 15100,
+    "frac_unique": 1.0,
+    "combos_with_multiple_labels": 0,
+    "label_determinism": 1.0
+  },
+  "leakage_receipts": [
+    {
+      "target": "Accident_Severity",
+      "leak_cols": "Number_of_Vehicles",
+      "macroF1_precrash_only": 0.967,
+      "macroF1_with_outcome_cols": 0.973,
+      "inflation": 0.006
+    },
+    {
+      "target": "Severity_Category",
+      "leak_cols": "Death Count, Injury Count",
+      "macroF1_precrash_only": 0.228,
+      "macroF1_with_outcome_cols": 1.0,
+      "inflation": 0.772
+    }
+  ],
+  "tier1": {
+    "test_accuracy": 0.9715,
+    "test_macro_f1": 0.9718,
+    "ece_uncalibrated": 0.0429,
+    "ece_calibrated": 0.0076
+  },
+  "conformal": {
+    "target": 0.9,
+    "empirical_coverage": 0.895,
+    "avg_set_size": 1.0
+  },
+  "tier2": {
+    "n_clusters": 253,
+    "noise_frac": 0.0362
+  },
+  "stress_test": {
+    "mean_violation_rate": 0.0604,
+    "n_scenarios": 9
+  },
+  "noise_robustness": [
+    {
+      "label_noise": 0.0,
+      "macro_f1": 0.97,
+      "ece": 0.059
+    },
+    {
+      "label_noise": 0.1,
+      "macro_f1": 0.9,
+      "ece": 0.081
+    },
+    {
+      "label_noise": 0.2,
+      "macro_f1": 0.829,
+      "ece": 0.078
+    },
+    {
+      "label_noise": 0.3,
+      "macro_f1": 0.766,
+      "ece": 0.085
+    }
+  ],
+  "continual": {
+    "overall_acc": 0.5006,
+    "final_window_acc": 0.46,
+    "n_drift_signals": 1,
+    "drift_points": [
+      1472
+    ],
+    "drift_detected_near_midpoint": true
+  },
+  "demo": {
+    "point": {
+      "s_behavior": 1.0,
+      "spatial_prior": 1.0,
+      "R": 1.0,
+      "level": "High",
+      "conformal_set": [
+        "Severe Accident"
+      ]
+    },
+    "route": {
+      "max_risk": 1.0,
+      "mean_risk": 0.9806,
+      "p90_risk": 1.0,
+      "level": "High"
+    }
+  },
+  "benchmark": [
+    {
+      "model": "CatBoost",
+      "macro_f1_mean": 0.9733,
+      "macro_f1_std": 0.0031
+    },
+    {
+      "model": "LightGBM",
+      "macro_f1_mean": 0.9703,
+      "macro_f1_std": 0.0032
+    },
+    {
+      "model": "XGBoost",
+      "macro_f1_mean": 0.9693,
+      "macro_f1_std": 0.0038
+    },
+    {
+      "model": "RandomForest",
+      "macro_f1_mean": 0.969,
+      "macro_f1_std": 0.0031
+    },
+    {
+      "model": "LogReg",
+      "macro_f1_mean": 0.6865,
+      "macro_f1_std": 0.0072
+    }
+  ],
+  "xai": {
+    "global_top": [
+      {
+        "feature": "Talk_While_Riding",
+        "mean_abs_shap": 0.8204
+      },
+      {
+        "feature": "Smoke_While_Riding",
+        "mean_abs_shap": 0.5606
+      },
+      {
+        "feature": "Road_Type",
+        "mean_abs_shap": 0.361
+      },
+      {
+        "feature": "Biker_Occupation",
+        "mean_abs_shap": 0.3382
+      },
+      {
+        "feature": "Valid_Driving_License",
+        "mean_abs_shap": 0.2544
+      },
+      {
+        "feature": "Bike_Speed",
+        "mean_abs_shap": 0.2388
+      },
+      {
+        "feature": "Speed_Limit",
+        "mean_abs_shap": 0.2239
+      },
+      {
+        "feature": "Biker_Alcohol",
+        "mean_abs_shap": 0.212
+      }
+    ],
+    "local_example": {
+      "predicted_class": "Severe Accident",
+      "predicted_proba": 1.0,
+      "top_contributions": {
+        "Talk_While_Riding": 1.0975,
+        "Biker_Alcohol": 1.0708,
+        "Smoke_While_Riding": 0.5962,
+        "Valid_Driving_License": 0.3758,
+        "Daily_Travel_Distance": 0.284,
+        "Bike_Speed": 0.1899
+      }
+    }
+  },
+  "deep_vs_gbdt": [
+    {
+      "model": "CatBoost (GBDT)",
+      "macro_f1": 0.978,
+      "ece": 0.044
+    },
+    {
+      "model": "MLP (deep)",
+      "macro_f1": 0.9518,
+      "ece": 0.0338
+    },
+    {
+      "model": "TabNet (deep)",
+      "macro_f1": 0.9486,
+      "ece": 0.0051
+    },
+    {
+      "model": "TensorFlow/Keras (deep)",
+      "macro_f1": 0.9563,
+      "ece": 0.014
+    }
+  ],
+  "ablation": [
+    {
+      "removed_group": "risk_behaviors",
+      "features_dropped": 3,
+      "macro_f1": 0.9268,
+      "drop_vs_full": 0.0428
+    },
+    {
+      "removed_group": "rider_profile",
+      "features_dropped": 6,
+      "macro_f1": 0.9306,
+      "drop_vs_full": 0.039
+    },
+    {
+      "removed_group": "speed",
+      "features_dropped": 2,
+      "macro_f1": 0.9383,
+      "drop_vs_full": 0.0314
+    },
+    {
+      "removed_group": "environment",
+      "features_dropped": 5,
+      "macro_f1": 0.9419,
+      "drop_vs_full": 0.0278
+    },
+    {
+      "removed_group": "protective",
+      "features_dropped": 3,
+      "macro_f1": 0.9518,
+      "drop_vs_full": 0.0178
+    },
+    {
+      "removed_group": "(none) full model",
+      "features_dropped": 0,
+      "macro_f1": 0.9696,
+      "drop_vs_full": 0.0
+    }
+  ],
+  "fusion_sensitivity": [
+    {
+      "lambda": 0.0,
+      "mean_R": 0.4905,
+      "frac_High": 0.321,
+      "frac_Medium": 0.351,
+      "frac_Low": 0.327
+    },
+    {
+      "lambda": 0.1,
+      "mean_R": 0.4757,
+      "frac_High": 0.321,
+      "frac_Medium": 0.351,
+      "frac_Low": 0.328
+    },
+    {
+      "lambda": 0.2,
+      "mean_R": 0.461,
+      "frac_High": 0.323,
+      "frac_Medium": 0.349,
+      "frac_Low": 0.328
+    },
+    {
+      "lambda": 0.3,
+      "mean_R": 0.4462,
+      "frac_High": 0.319,
+      "frac_Medium": 0.347,
+      "frac_Low": 0.333
+    },
+    {
+      "lambda": 0.5,
+      "mean_R": 0.4166,
+      "frac_High": 0.302,
+      "frac_Medium": 0.327,
+      "frac_Low": 0.371
+    },
+    {
+      "lambda": 0.7,
+      "mean_R": 0.3869,
+      "frac_High": 0.263,
+      "frac_Medium": 0.277,
+      "frac_Low": 0.46
+    }
+  ]
+}
