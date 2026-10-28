@@ -2,6 +2,10 @@
 
 **A Calibrated, Auditable, and Continually Learning Framework for Pre-Crash Motorcyclist Risk in Dhaka.**
 
+> 📄 **Paper:** *RideGuard: A Behavioural-Spatial Risk Framework with Conformal Prediction for Motorcycle Safety*, presented at **IEEE COMPAS 2026**.
+>
+> 📱 **The app built on this model:** [Ride_Guard_WebApp](https://github.com/rakib4123/Ride_Guard_WebApp) · [Live demo](https://ride-guard-web-app-web.vercel.app)
+
 RideGuard couples a calibrated behavioural risk model with a spatial relative-risk prior, wraps both in conformal prediction, continual learning with drift detection, and a self-auditing layer (the **Realism Audit**, Algorithm 1 in the paper). Its central finding: a model can reach ~0.97 macro-F1 with good calibration while the audit shows the data has essentially no learnable pre-crash signal — so high accuracy and good calibration are **not**, by themselves, evidence of trustworthiness.
 
 > The evaluation datasets are near-deterministic by the framework's own audit (`label_determinism = 1.00`). Results below are reproducible and honest; the framework's value is the calibration-and-audit machinery, which would measure deployment readiness directly on real or prospective data.
